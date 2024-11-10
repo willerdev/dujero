@@ -162,8 +162,8 @@ const Products = () => {
                       onClick={() => handleAddToQuote(product)}
                       disabled={selectedProducts.some(p => p.id === product.id)}
                     >
-                      <ShoppingCart size={20} />
-                      {selectedProducts.some(p => p.id === product.id) ? 'Added to Quote' : 'Add Quote'}
+                      
+                      {selectedProducts.some(p => p.id === product.id) ? 'Added to Quote' : ' Quote'}
                     </button>
                   </div>
                 </div>
@@ -174,7 +174,7 @@ const Products = () => {
       </section>
 
       {/* Features Section */}
-      <section className="section-padding bg-white">
+      {/* <section className="section-padding bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="heading-lg mb-4">Why Choose Our Products</h2>
@@ -208,7 +208,7 @@ const Products = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Quote Cart Button */}
       <QuoteCart
