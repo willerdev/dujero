@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: #b31e32;
+  }
+  
+  body {
+    @apply text-gray-800;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-[#b31e32] text-white px-6 py-2 rounded-lg hover:bg-[#991929] transition-colors;
+  }
+  
+  .section-padding {
+    @apply py-16 px-4 sm:px-6 lg:px-8;
+  }
+  
+  .heading-xl {
+    @apply text-4xl sm:text-5xl font-bold;
+  }
+  
+  .heading-lg {
+    @apply text-3xl sm:text-4xl font-bold;
+  }
+  
+  .heading-md {
+    @apply text-2xl sm:text-3xl font-bold;
+  }
+}
