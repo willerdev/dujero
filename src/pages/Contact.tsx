@@ -29,8 +29,8 @@ const Contact = () => {
               {
                 icon: <Phone className="w-8 h-8" />,
                 title: "Phone",
-                content: "+1 234 567 890",
-                link: "tel:+1234567890"
+                content: "+250 788 609 874",
+                link: "tel:+250788609874"
               },
               {
                 icon: <Mail className="w-8 h-8" />,
@@ -41,7 +41,7 @@ const Contact = () => {
               {
                 icon: <MapPin className="w-8 h-8" />,
                 title: "Address",
-                content: "123 Business Ave, Suite 100, New York, NY 10001",
+                content: "Kigali Rwanda Chic building",
                 link: "#"
               }
             ].map((item, index) => (
