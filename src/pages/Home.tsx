@@ -25,7 +25,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Premier Business Solutions in Rwanda
+             DUJERO BUSINESS GROUP in Rwanda
             </h1>
             <p className="text-xl text-gray-300 mb-8">
               A full-service business and IT advisory firm specializing in Construction, Media, Digital Marketing, and IT services for SMEs in Rwanda.
