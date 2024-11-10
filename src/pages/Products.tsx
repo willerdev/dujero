@@ -163,7 +163,7 @@ const Products = () => {
                       disabled={selectedProducts.some(p => p.id === product.id)}
                     >
                       
-                      {selectedProducts.some(p => p.id === product.id) ? 'Added to Quote' : ' Quote'}
+                      {selectedProducts.some(p => p.id === product.id) ? 'Added' : ' Quote'}
                     </button>
                   </div>
                 </div>
