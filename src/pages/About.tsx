@@ -68,7 +68,7 @@ const About = () => {
       </section>
 
       {/* Team Section */}
-      <section className="section-padding bg-gray-50">
+      {/* <section className="section-padding bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="heading-lg mb-4">Our Leadership Team</h2>
@@ -93,7 +93,7 @@ const About = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Values Section */}
       <section className="section-padding bg-[#b31e32] text-white">

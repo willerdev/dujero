@@ -1,5 +1,6 @@
 import { X, Trash2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import emailjs from '@emailjs/browser';
 
 interface Product {
   id: number;
@@ -22,7 +23,7 @@ interface QuoteFormData {
 }
 
 const QuoteModal = ({ products, onClose, onRemoveProduct }: QuoteModalProps) => {
-  const { register, handleSubmit, formState: { errors } } = useForm<QuoteFormData>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<QuoteFormData>();
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('rw-RW', { 
@@ -33,18 +34,45 @@ const QuoteModal = ({ products, onClose, onRemoveProduct }: QuoteModalProps) => 
 
   const totalPrice = products.reduce((sum, product) => sum + product.price, 0);
 
-  const onSubmit = (data: QuoteFormData) => {
-    // Here you would typically send this to your backend
+  const onSubmit = async (data: QuoteFormData) => {
     const quoteRequest = {
       products,
       totalPrice,
       ...data,
       timestamp: new Date().toISOString()
     };
-    
-    console.log('Quote Request:', quoteRequest);
-    // TODO: Implement email sending logic
-    onClose();
+
+    // Prepare email template parameters
+    const templateParams = {
+      to_email: data.email,
+      from_name: "Dujero Business Group",
+      to_name: data.email.split('@')[0], // Use first part of email as name
+      phone: data.phone,
+      address: data.address,
+      message: data.message,
+      products_list: products.map(p => 
+        `${p.name} (${formatPrice(p.price)})`
+      ).join('\n'),
+      total_price: formatPrice(totalPrice)
+    };
+
+    try {
+      const response = await emailjs.send(
+        'service_5w02ryo', // Replace with your EmailJS service ID
+        'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
+        templateParams,
+        'YOUR_PUBLIC_KEY' // Replace with your EmailJS public key
+      );
+
+      if (response.status === 200) {
+        alert('Quote request sent successfully!');
+        reset(); // Reset form
+        onClose();
+      }
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      alert('Failed to send quote request. Please try again later.');
+    }
   };
 
   if (products.length === 0) return null;
