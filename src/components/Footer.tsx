@@ -28,15 +28,15 @@ const Footer = () => {
             <ul className="space-y-2">
               <li className="flex items-center gap-2">
                 <Phone size={18} />
-                <span className="text-gray-400">+1 234 567 890</span>
+                <span className="text-gray-400">+250 788 609 874</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail size={18} />
-                <span className="text-gray-400">info@dujero.com</span>
+                <span className="text-gray-400">dujerobg@gmail.com</span>
               </li>
               <li className="flex items-center gap-2">
                 <MapPin size={18} />
-                <span className="text-gray-400">123 Business Ave, Suite 100</span>
+                <span className="text-gray-400">Kigali Rwanda Chic building</span>
               </li>
             </ul>
           </div>

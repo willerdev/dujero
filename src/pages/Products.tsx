@@ -1,12 +1,23 @@
 import { useState } from 'react';
 import { ShoppingCart, Star } from 'lucide-react';
+import QuoteModal from '../components/QuoteModal';
+import QuoteCart from '../components/QuoteCart';
 
-const products = [
+interface Product {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  category: string;
+}
+
+const products: Product[] = [
   {
     id: 1,
     name: "Enterprise Suite Pro",
     description: "Complete business management solution for large enterprises",
-    price: 999.99,
+    price: 999990, // Price in RWF
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     category: "Software"
   },
@@ -14,7 +25,7 @@ const products = [
     id: 2,
     name: "Analytics Dashboard",
     description: "Real-time business analytics and reporting tool",
-    price: 499.99,
+    price: 499990,
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     category: "Analytics"
   },
@@ -22,7 +33,7 @@ const products = [
     id: 3,
     name: "Cloud Security Package",
     description: "Advanced security solutions for cloud infrastructure",
-    price: 799.99,
+    price: 799990,
     image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     category: "Security"
   },
@@ -30,7 +41,7 @@ const products = [
     id: 4,
     name: "HR Management System",
     description: "Comprehensive human resource management solution",
-    price: 599.99,
+    price: 599990,
     image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     category: "Software"
   },
@@ -38,7 +49,7 @@ const products = [
     id: 5,
     name: "CRM Elite",
     description: "Advanced customer relationship management platform",
-    price: 699.99,
+    price: 699990,
     image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     category: "Software"
   },
@@ -46,7 +57,7 @@ const products = [
     id: 6,
     name: "Financial Analytics Tool",
     description: "Powerful financial analysis and forecasting solution",
-    price: 899.99,
+    price: 899990,
     image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     category: "Analytics"
   }
@@ -57,6 +68,8 @@ const categories = ["All", "Software", "Analytics", "Security"];
 const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [showQuoteModal, setShowQuoteModal] = useState(false);
+  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
 
   const filteredProducts = products.filter(product => {
     const matchesCategory = selectedCategory === "All" || product.category === selectedCategory;
@@ -64,6 +77,23 @@ const Products = () => {
                          product.description.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
+
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('rw-RW', { 
+      style: 'currency', 
+      currency: 'RWF'
+    }).format(price);
+  };
+
+  const handleAddToQuote = (product: Product) => {
+    if (!selectedProducts.some(p => p.id === product.id)) {
+      setSelectedProducts([...selectedProducts, product]);
+    }
+  };
+
+  const handleRemoveFromQuote = (productId: number) => {
+    setSelectedProducts(selectedProducts.filter(p => p.id !== productId));
+  };
 
   return (
     <div className="bg-gray-50">
@@ -124,10 +154,16 @@ const Products = () => {
                   </div>
                   <p className="text-gray-600 mb-4">{product.description}</p>
                   <div className="flex justify-between items-center">
-                    <span className="text-2xl font-bold">${product.price}</span>
-                    <button className="btn-primary flex items-center gap-2">
+                    <span className="text-2xl font-bold">{formatPrice(product.price)}</span>
+                    <button 
+                      className={`btn-primary flex items-center gap-2 ${
+                        selectedProducts.some(p => p.id === product.id) ? 'opacity-50 cursor-not-allowed' : ''
+                      }`}
+                      onClick={() => handleAddToQuote(product)}
+                      disabled={selectedProducts.some(p => p.id === product.id)}
+                    >
                       <ShoppingCart size={20} />
-                      Add to Cart
+                      {selectedProducts.some(p => p.id === product.id) ? 'Added to Quote' : 'Add Quote'}
                     </button>
                   </div>
                 </div>
@@ -173,6 +209,21 @@ const Products = () => {
           </div>
         </div>
       </section>
+
+      {/* Quote Cart Button */}
+      <QuoteCart
+        count={selectedProducts.length}
+        onClick={() => setShowQuoteModal(true)}
+      />
+
+      {/* Quote Modal */}
+      {showQuoteModal && (
+        <QuoteModal 
+          products={selectedProducts}
+          onClose={() => setShowQuoteModal(false)}
+          onRemoveProduct={handleRemoveFromQuote}
+        />
+      )}
     </div>
   );
 };
